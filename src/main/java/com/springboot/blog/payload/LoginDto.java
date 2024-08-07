@@ -11,15 +11,15 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoginDto {
-    private String usernameOrLogin;
+    private String usernameOrEmail;
     private String password;
 
-    public String getUsernameOrLogin() {
-        return usernameOrLogin;
+    public String getUsernameOrEmail() {
+        return usernameOrEmail;
     }
 
-    public void setUsernameOrLogin(String usernameOrLogin) {
-        this.usernameOrLogin = usernameOrLogin;
+    public void setUsernameOrEmail(String usernameOrEmail) {
+        this.usernameOrEmail = usernameOrEmail;
     }
 
     public String getPassword() {
