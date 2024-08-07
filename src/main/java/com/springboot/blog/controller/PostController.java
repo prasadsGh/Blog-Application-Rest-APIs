@@ -33,8 +33,8 @@ public class PostController {
     }
 
     // get all posts rest api
-    @PreAuthorize("hasRole('ADMIN')")
-     @GetMapping
+    //@PreAuthorize("hasRole('ADMIN','USER')")
+    @GetMapping
     public PostResponse getAllPost(
              @RequestParam(
                      value="pageNo",
