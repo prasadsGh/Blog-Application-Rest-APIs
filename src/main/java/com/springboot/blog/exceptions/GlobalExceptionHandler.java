@@ -14,13 +14,23 @@ import java.util.Date;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    //handle specific exceptions
+    //handle specific exceptions for Resource Not found exception
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ErrorDetails> handleResourceNotFoundException(ResourceNotFoundException exception,
                                                                         WebRequest webRequest){
 
         ErrorDetails errorDetails = new ErrorDetails(new Date(), exception.getMessage(),webRequest.getDescription(false));
         return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
+
+    }
+
+    //handle specific exceptions for Blog Application API exception
+    @ExceptionHandler(BlogAPIException.class)
+    public ResponseEntity<ErrorDetails> handleBlogAPIException(BlogAPIException exception,
+                                                                        WebRequest webRequest){
+
+        ErrorDetails errorDetails = new ErrorDetails(new Date(), exception.getMessage(),webRequest.getDescription(false));
+        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
 
     }
     //handle global exceptions
