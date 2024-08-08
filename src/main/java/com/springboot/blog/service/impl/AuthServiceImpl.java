@@ -1,5 +1,6 @@
 package com.springboot.blog.service.impl;
 
+import com.springboot.blog.entity.Role;
 import com.springboot.blog.exceptions.BlogAPIException;
 import com.springboot.blog.payload.LoginDto;
 import com.springboot.blog.payload.RegisterDto;
@@ -13,6 +14,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import com.springboot.blog.entity.User;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class AuthServiceImpl implements AuthService {
@@ -52,6 +57,29 @@ public class AuthServiceImpl implements AuthService {
                     "Username already exist, please try another username!"
             );
         }
-        return null;
+
+        // add check for email exist in database
+
+        if(userRepository.existsByEmail(registerDto.getEmail())){
+            throw new BlogAPIException(
+                    HttpStatus.BAD_REQUEST,
+                    "Email already exist, please try another username!"
+            );
+        }
+
+        User user= new User();
+        user.setEmail(registerDto.getEmail());
+        user.setName(registerDto.getName());
+        user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
+        user.setUsername(registerDto.getUsername());
+
+        Set<Role> roles = new HashSet<>();
+        Role userRole = roleRepository.findByName("ROLE_USER").get();
+        roles.add(userRole);
+        user.setRoles(roles);
+        userRepository.save(user);
+
+
+        return "Registration is successful!";
     }
 }
