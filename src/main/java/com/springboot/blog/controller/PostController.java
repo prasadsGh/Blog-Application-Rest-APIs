@@ -34,6 +34,7 @@ public class PostController {
 
     // get all posts rest api
     //@PreAuthorize("hasRole('ADMIN','USER')")
+    //http://localhost:8080/api/posts
     @GetMapping
     public PostResponse getAllPost(
              @RequestParam(
@@ -55,21 +56,31 @@ public class PostController {
         return postService.getAllPost(pageNo, pageSize, sortBy);
      }
    // get post by id rest api
+    //http://localhost:8080/api/posts/id
     @GetMapping("/{id}")
     public ResponseEntity<PostDto> getPostById(@PathVariable(name="id") long id){
         return ResponseEntity.ok(postService.getPostById(id));
     }
 
     // update post rest api
+    //http://localhost:8080/api/posts/id
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<PostDto> updatePost(@RequestBody PostDto postDto, @PathVariable(name ="id") long id){
         PostDto postResponse = postService.updatePost(postDto,id);
         return new ResponseEntity<>(postResponse, HttpStatus.OK);
     }
+    // get lists of post by category id
+    //http://localhost:8080/api/posts/category/id
+    @GetMapping("/category/{id}")
+    public ResponseEntity<List<PostDto>> getPostByCategoryId(@PathVariable(name="id") long categoryId){
+        List<PostDto> listOfPost =postService.getPostByCategory(categoryId);
 
+        return ResponseEntity.ok(listOfPost);
+
+    }
     //delete post rest api
-
+    //http://localhost:8080/api/posts/id
     @DeleteMapping("/{id}")
     public ResponseEntity<PostDto> deletePost(@PathVariable(name="id") long id){
 

@@ -11,6 +11,11 @@ public class PostDto {
     private String description;
     private String content;
     private Set<CommentDto> comment;
+    private long categoryId;
+
+    public long getCategoryId() {
+        return categoryId;
+    }
 
     public void setComment(Set<CommentDto> comment) {
         this.comment = comment;

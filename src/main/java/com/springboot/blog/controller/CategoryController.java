@@ -22,6 +22,7 @@ public class CategoryController {
     }
 
     // build add category rest api
+    //http://localhost:8080/api/categories/add
     @PostMapping(value="/add")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<CategoryDto> addCategory(@RequestBody CategoryDto categoryDto){
@@ -29,18 +30,21 @@ public class CategoryController {
         return new ResponseEntity<>(savedDto, HttpStatus.CREATED);
     }
 
+    //http://localhost:8080/api/categories/id
     @GetMapping(value="/{id}")
    // @PreAuthorize("hasRole({'ADMIN','USER'})")
     public ResponseEntity<CategoryDto> getCategory(@PathVariable(name="id") long id){
         return new ResponseEntity<>(categoryService.getCategory(id),HttpStatus.OK);
     }
 
+    //http://localhost:8080/api/categories/
     @GetMapping
     // @PreAuthorize("hasRole({'ADMIN','USER'})")
     public ResponseEntity<List<CategoryDto>> getCategory(){
         return new ResponseEntity<>(categoryService.getAllCategories(),HttpStatus.OK);
     }
 
+    //http://localhost:8080/api/categories/id
     @PutMapping(value="/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<CategoryDto> updateCategory(@RequestBody CategoryDto categoryDto, @PathVariable long id){
@@ -49,6 +53,7 @@ public class CategoryController {
             return new ResponseEntity<>(categoryDto1,HttpStatus.OK);
     }
 
+    //http://localhost:8080/api/categories/id
     @DeleteMapping(value="/{id}")
      @PreAuthorize("hasRole({'ADMIN'})")
     public ResponseEntity<String> deleteCategory(@PathVariable(name="id") long id){

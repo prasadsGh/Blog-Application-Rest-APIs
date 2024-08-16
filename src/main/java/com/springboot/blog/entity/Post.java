@@ -73,8 +73,21 @@ public class Post {
     @JoinColumn(name= "category_id")
     private Category category;
 
+    public Set<Comment> getComments() {
+        return comments;
+    }
 
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
+    }
 
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 }
 
 

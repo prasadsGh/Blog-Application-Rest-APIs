@@ -20,6 +20,7 @@ public class CommentController {
         this.commentService = commentService;
     }
 
+    //http://localhost:8080/api/posts/{postId}/comments
     @PostMapping("/posts/{postId}/comments")
     public ResponseEntity<CommentDto> createComment
             (
@@ -30,17 +31,19 @@ public class CommentController {
         return new ResponseEntity<>(commentService.createComment(postId,commentDto), HttpStatus.CREATED);
     }
 
+    //http://localhost:8080/api/posts/{postId}/comments
     @GetMapping("/posts/{postId}/comments")
-    public List<CommentDto> getAllCommentByPostId
+    public ResponseEntity<List<CommentDto>> getAllCommentByPostId
             (
                     @PathVariable(value="postId") long postId
             ){
 
         List<CommentDto> listOfComments = (commentService.getAllCommentsByPostId(postId));
 
-        return listOfComments;
+        return ResponseEntity.ok(listOfComments);
     }
 
+    //http://localhost:8080/api/posts/{postId}/comments/{commentId}
     @GetMapping("/posts/{postId}/comments/{commentId}")
     public ResponseEntity<CommentDto> getCommentById(
             @PathVariable(value="postId") long postId,
@@ -49,6 +52,7 @@ public class CommentController {
         return new ResponseEntity<>(commentService.getCommentById(postId,commentId),HttpStatus.OK);
     }
 
+    //http://localhost:8080/api/posts/{postId}/comments/{commentId}
     @PutMapping("/posts/{postId}/comments/{commentId}")
     public ResponseEntity<CommentDto> updateComment(
             @PathVariable(value="postId") long postId,
@@ -57,7 +61,7 @@ public class CommentController {
     ){
         return new ResponseEntity<>(commentService.updateComment(postId,commentId,commentRequest),HttpStatus.OK);
     }
-
+    //http://localhost:8080/api/posts/{postId}/comments/{commentId}
     @DeleteMapping("/posts/{postId}/comments/{commentId}")
     public ResponseEntity<String> deleteComment(
             @PathVariable(value="postId") long postId,
