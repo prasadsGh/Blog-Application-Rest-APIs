@@ -5,6 +5,7 @@ import com.springboot.blog.entity.Post;
 import com.springboot.blog.payload.PostResponse;
 import com.springboot.blog.service.PostService;
 import com.springboot.blog.payload.PostDto;
+import jakarta.validation.Valid;
 import org.apache.logging.log4j.util.PerformanceSensitive;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -28,7 +29,7 @@ public class PostController {
     //create blog post rest api
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
-    public ResponseEntity<PostDto>createPost(@RequestBody PostDto postDto){
+    public ResponseEntity<PostDto>createPost(@Valid @RequestBody PostDto postDto){
         return new ResponseEntity<>(postService.createPost(postDto), HttpStatus.CREATED);
     }
 
@@ -66,7 +67,7 @@ public class PostController {
     //http://localhost:8080/api/posts/id
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
-    public ResponseEntity<PostDto> updatePost(@RequestBody PostDto postDto, @PathVariable(name ="id") long id){
+    public ResponseEntity<PostDto> updatePost(@Valid @RequestBody PostDto postDto, @PathVariable(name ="id") long id){
         PostDto postResponse = postService.updatePost(postDto,id);
         return new ResponseEntity<>(postResponse, HttpStatus.OK);
     }
