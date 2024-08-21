@@ -2,6 +2,8 @@ package com.springboot.blog.config;
 
 import com.springboot.blog.security.JwtAuthenticationEntryPoint;
 import com.springboot.blog.security.JwtAuthenticationFilter;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,6 +30,12 @@ import java.net.http.HttpRequest;
 
 @Configuration
 @EnableMethodSecurity
+@SecurityScheme(
+        name = "Bearer Token",
+        type = SecuritySchemeType.HTTP,
+        bearerFormat = "JWT",
+        scheme ="bearer"
+)
 @Component
 public class SecurityConfig {
 
@@ -62,8 +70,11 @@ public class SecurityConfig {
                 csrf(csrf -> csrf.disable()).
                 authorizeHttpRequests(
                                     // authorize-> authorize.anyRequest().authenticated()
-                        (authorize)->authorize.requestMatchers(HttpMethod.GET, "/api/**").permitAll()
+                        (authorize)->authorize
+                                .requestMatchers(HttpMethod.GET, "/api/**").permitAll()
                                 .requestMatchers("/api/auth/**").permitAll()
+                                .requestMatchers("/swagger-ui/**").permitAll()
+                                .requestMatchers("/v3/api-docs/**").permitAll()
                                 .anyRequest().authenticated()
         ).exceptionHandling(exception->
                         exception.authenticationEntryPoint(jwtAuthenticationEntryPoint)
