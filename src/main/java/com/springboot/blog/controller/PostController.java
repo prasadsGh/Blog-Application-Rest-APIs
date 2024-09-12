@@ -6,6 +6,7 @@ import com.springboot.blog.payload.PostResponse;
 import com.springboot.blog.service.PostService;
 import com.springboot.blog.payload.PostDto;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.apache.logging.log4j.util.PerformanceSensitive;
 import org.springframework.http.HttpStatus;
@@ -18,7 +19,10 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/api/posts")
+@RequestMapping("/api/v1/posts")
+@Tag(
+        name="CRUD Rest APIs for Post Resource"
+)
 public class PostController {
 
 
